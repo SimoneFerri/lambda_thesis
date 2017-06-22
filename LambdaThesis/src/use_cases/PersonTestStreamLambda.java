@@ -11,5 +11,11 @@ public class PersonTestStreamLambda {
             filter(p -> p.getGender() == Person.Sex.FEMALE && p.getAge() >= 21).
                 forEach(System.out::println);;
        
+        roster.stream().
+           	filter(p -> p.getGender() == Person.Sex.MALE && p.getAge() >= 21).
+            	map(p -> p.getEmailAddress()).
+            		forEach(System.out::println);
+           
+                
     }
 }
