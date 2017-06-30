@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.chrono.IsoChronology;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
  
 public class Person {
    
@@ -29,10 +30,6 @@ public class Person {
             .until(IsoChronology.INSTANCE.dateNow())
             .getYears();
     }
- 
-    public void printPerson() {
-      System.out.println(name + ", " + this.getAge());
-    }
      
     public Sex getGender() {
         return gender;
@@ -55,8 +52,7 @@ public class Person {
     }
  
     public String toString(){
-		return name + " " +  getAge();
-    	
+		return name + " " +  getAge() + " ";
     }
     
     
@@ -87,5 +83,16 @@ public class Person {
         return roster;
     }
      
+    public static String printPersonsWithPredicate(List<Person> roster, Predicate<Person> tester) {
+        String ris = "";
+    	for (Person p : roster) {
+            if (tester.test(p)) {
+                ris+= p.toString();
+            }
+        }
+    	return ris;
+    }
+    
+    
 }
 
