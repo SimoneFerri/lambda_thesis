@@ -1,12 +1,13 @@
 package use_cases;
 
 import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
 import java.time.chrono.IsoChronology;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
  
-public class Person {
+public class Person implements Comparable<Object>  {
    
     public enum Sex {
         MALE, FEMALE
@@ -39,20 +40,21 @@ public class Person {
         return name;
     }
      
-    public String getEmailAddress() {
+	public String getEmailAddress() {
         return emailAddress;
     }
      
     public LocalDate getBirthday() {
         return birthday;
     }
-     
-    public static int compareByAge(Person a, Person b) {
-        return a.birthday.compareTo(b.birthday);
-    }
- 
+    
     public String toString(){
 		return name + " " +  getAge() + " ";
+    }
+    
+    public String setEmail(String dominio){
+    	emailAddress = name + "@" + dominio;
+    	return emailAddress;
     }
     
     
@@ -92,7 +94,54 @@ public class Person {
         }
     	return ris;
     }
-    
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((birthday == null) ? 0 : birthday.hashCode());
+		result = prime * result + ((emailAddress == null) ? 0 : emailAddress.hashCode());
+		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Person other = (Person) obj;
+		if (birthday == null) {
+			if (other.birthday != null)
+				return false;
+		} else if (!birthday.equals(other.birthday))
+			return false;
+		if (emailAddress == null) {
+			if (other.emailAddress != null)
+				return false;
+		} else if (!emailAddress.equals(other.emailAddress))
+			return false;
+		if (gender != other.gender)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+
+	public int compareTo(Object arg0) {
+		Person p = (Person)arg0;
+		return name.compareTo(p.getName());
+	}
+
+
+	
     
 }
 
