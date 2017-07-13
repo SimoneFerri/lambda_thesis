@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDate;
 import java.time.chrono.IsoChronology;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
  
@@ -18,7 +19,7 @@ public class Person implements Comparable<Object>  {
     Sex gender;
     String emailAddress;
    
-    Person(String nameArg, LocalDate birthdayArg,
+    public Person(String nameArg, LocalDate birthdayArg,
         Sex genderArg, String emailArg) {
         name = nameArg;
         birthday = birthdayArg;
@@ -139,7 +140,7 @@ public class Person implements Comparable<Object>  {
 		Person p = (Person)arg0;
 		return name.compareTo(p.getName());
 	}
-
+	
 
 	
     

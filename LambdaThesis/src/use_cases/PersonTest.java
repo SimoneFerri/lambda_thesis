@@ -252,54 +252,5 @@ public class PersonTest {
 		assertEquals(byGenderLambda.get(true), male );
 		assertEquals(byGenderLambda.get(false), female);
 	}
-
-	
-	/*
-	 @Ignore
-    @Test
-    public void testAverage1(){
-	    
-    	Person.Sex s = Person.Sex.MALE;
-    	//With lambda
-    	Double lambda = roster.stream().
-    						filter(p -> p.getGender() == s ).
-    							mapToDouble(p -> p.getAge()).
-    								average().
-    									getAsDouble();
-
-    	
-    	
-    	Double noLambda = 0.;
-    	int cont = 0;
-    	
-    	//without lambda
-    	roster.stream().filter(new Predicate<Person>(){
-
-			@Override
-			public boolean test(Person p) {
-				return p.getGender() == s;
-			}
-    		
-    	} );
-    	
-    	
-    	assertEquals(lambda,noLambda);
-    	
-    }
-    
-	//JOOQ
-	    @Test
-	    public void testReduceSu1m() throws Exception {
-	    	class XYZ{
-	    		public void doWithCall(Callable c) throws Exception{
-	    			c.call();
-	    		}
-	    	}
-	    	
-	    	new XYZ().doWithCall(() -> {throw new Exception();});
-	    	
-	    	
-	    }
-	 */
-	 
+     
 }

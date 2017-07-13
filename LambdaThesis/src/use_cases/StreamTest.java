@@ -5,6 +5,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.time.chrono.IsoChronology;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -218,13 +222,25 @@ public class StreamTest {
 	@Test
 	public void testPeek(){
 		
+		ByteArrayOutputStream hideOut = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(hideOut));
 		//Use for debugging pipeline
-		roster.stream()
+		System.out.println(roster.stream()
         .filter(e -> e.getGender() == Person.Sex.MALE)
-        .peek(e -> System.out.println("Filtered value: " + e))
+        .peek(e -> System.out.println("Filtered value: " + e + ";"))
         .map(e -> e.getAge())
-        .peek(e -> System.out.println("Mapped value: " + e));
+        .peek(e -> System.out.println("Mapped value: " + e + ";"))
+        .findAny()
+        .get());
+ //       .forEach(System.out::println);
 	
+		String s = "Filtered value: Fred 37 ; Mapped value: 37; 37 ";
+
+		assertEquals(s,hideOut.toString().replaceAll("\\s+"," "));
+		
+		System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+
+		
 	}
 
 }
