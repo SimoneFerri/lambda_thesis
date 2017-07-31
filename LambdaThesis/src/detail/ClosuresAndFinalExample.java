@@ -4,7 +4,7 @@ package detail;
 
 public class ClosuresAndFinalExample {
 
-
+	@FunctionalInterface 
 	interface Process{
 		void process(int i);
 	}
