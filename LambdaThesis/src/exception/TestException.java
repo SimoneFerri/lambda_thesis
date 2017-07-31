@@ -165,9 +165,19 @@ public class TestException {
 	
 	@Test (expected = UncheckedIOException.class)
 	public void testUnchekedJooQ(){
+		numbers.stream().forEach(i -> {
+			try {
+				readFromFile(i);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		});
+		
 		numbers.stream().forEach(Unchecked.consumer(e -> readFromFile(e)));
+		
 	}
-	
+
+		
 	//CHEKED EXCEPTION WITHOUT TRY/CATCH OR THROWS
 	@Test (expected = Exception.class)
 	public void testUnchekedWithoutNoticing(){
@@ -181,8 +191,9 @@ public class TestException {
 	
 	@Test  (expected = Exception.class)
 	public void testPredicate(){
-		Stream.of("a","b","c").filter(Unchecked.predicate( s -> { if (s.equals("a")) throw new Exception();
-																				return true;}));		
+		Stream.of("a","b","c")
+			  .filter(Unchecked
+			  .predicate( s -> { if (s.equals("a")) throw new Exception(); return true;}));		
 	}
 	
 	
