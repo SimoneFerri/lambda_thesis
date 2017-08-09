@@ -131,7 +131,7 @@ public class PersonTest {
     	int lambdaSum = roster.stream().
           					filter(p -> p.getGender() == Person.Sex.MALE).
           				  			reduce(0,(a,b) ->  b.getAge() + a,(x,y) -> x + y);
-        
+ 
     	//Without lambda
     	int noLambdaSum =0;
     	for (Person p : roster) {

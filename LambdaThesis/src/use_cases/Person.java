@@ -140,6 +140,10 @@ public class Person implements Comparable<Object>  {
 		Person p = (Person)arg0;
 		return name.compareTo(p.getName());
 	}
+
+	public void printPerson() {
+		System.out.println(this);
+	}
 	
 
 	
