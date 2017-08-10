@@ -29,38 +29,30 @@ public class StreamTest {
 
     List<Person> roster = Person.createRoster();
 
-    Predicate<Person> OnlyMan = new Predicate<Person>(){
-		public boolean test(Person t) {
-			return t.getGender() == Person.Sex.MALE;
-		}	
-    };
-    
-    
 	@Test
 	public void testAllMatch() {
-		assertFalse(roster.stream().allMatch(OnlyMan));
-		assertTrue(roster.stream().anyMatch(OnlyMan));
+		assertFalse(roster.stream().allMatch(t -> t.getGender() == Person.Sex.MALE));
+		assertTrue(roster.stream().anyMatch(t -> t.getGender() == Person.Sex.MALE));
 		roster.remove(1);
-		assertTrue(roster.stream().allMatch(OnlyMan));
+		assertTrue(roster.stream().allMatch(t -> t.getGender() == Person.Sex.MALE));
 		assertTrue(roster.stream().noneMatch(p -> p.getGender() == Person.Sex.FEMALE));
+		
 	}
 	
 	@Test
 	public void testCount(){
 		assertEquals(roster.stream().count(), roster.size() );
-		assertEquals(roster.stream().filter(OnlyMan).count(), 3 );
+		assertEquals(roster.stream().filter(t -> t.getGender() == Person.Sex.MALE).count(), 3 );
 	}
 	
 	@Test
 	public void testConcat(){
-		Stream<Person> DefaultRoster = Stream.generate(new Supplier<Person>(){
-											public Person get() {
-												return new Person(
+		Stream<Person> DefaultRoster = Stream.generate(() -> new Person(
 											            "Default",
 											            IsoChronology.INSTANCE.date(1980, 1, 1),
 											            Person.Sex.MALE,
-											            "default@default.com");
-										}}).limit(5);
+											            "default@default.com")
+										).limit(5);
 		
 		assertEquals(Stream.concat(roster.stream(),DefaultRoster ).count(),9);
 	}
@@ -73,7 +65,6 @@ public class StreamTest {
 	            IsoChronology.INSTANCE.date(2000, 9, 12),
 	            Person.Sex.MALE, "bob@example.com"));
 		     
-		
 		assertEquals(roster.stream().distinct().count(), 4);
 		
 		assertNotEquals(roster.stream().collect(Collectors.toList()),Person.createRoster());
@@ -93,11 +84,9 @@ public class StreamTest {
 	@Test
 	public void testSorted2ArgByBirthday(){
 		
-		List<Person> orderedRosterByBirthday = roster.stream().sorted( new Comparator<Person>(){
-													public int compare(Person o1, Person o2) {
-														return o2.getBirthday().compareTo(o1.getBirthday());
-													}
-												}).collect(Collectors.toList());
+		List<Person> orderedRosterByBirthday = roster.stream()									
+												.sorted((o1, o2) -> o2.getBirthday().compareTo(o1.getBirthday()))
+													.collect(Collectors.toList());
 		
 		assertEquals(orderedRosterByBirthday.get(0).getName(),"Bob" );
 		
@@ -105,7 +94,7 @@ public class StreamTest {
 	
 	@Test
 	public void testFilter(){
-		List<Person> menFilter = roster.stream().filter(OnlyMan).
+		List<Person> menFilter = roster.stream().filter(t -> t.getGender() == Person.Sex.MALE).
 						   						 	collect(Collectors.toList());
 		
 		List<Person> men = new ArrayList<Person>();
@@ -144,38 +133,28 @@ public class StreamTest {
 	
 	@Test
 	public void testForEachOrdered(){
-		roster.stream().forEach(new Consumer<Person>(){
-									public void accept(Person t) {
-										t.setEmail("libero.it");
-									}
-								});
+		roster.stream().forEach(t ->t.setEmail("libero.it"));
 		
 		List<String> newRoster = roster.stream().map(p -> p.getEmailAddress()).collect(Collectors.toList());
 	
-		assertTrue(newRoster.stream().allMatch(new Predicate<String>(){
-													public boolean test(String t) {
-														return t.contains("libero.it");
-													}						
-												}));
+		assertTrue(newRoster.stream().allMatch(t -> t.contains("libero.it")));
 	}
 	
 	@Test
 	public void testGenerate(){
-		List<Person> DefaultRoster = Stream.generate(new Supplier<Person>(){
-											public Person get() {
-												return new Person(
+		List<Person> DefaultRoster = Stream.generate(() -> new Person(
 											            "Default",
 											            IsoChronology.INSTANCE.date(1980, 1, 1),
 											            Person.Sex.MALE,
-											            "default@default.com");
-										}}).limit(5).collect(Collectors.toList());
+											            "default@default.com"))
+									.limit(5).collect(Collectors.toList());
+		
 		
 		assertTrue(DefaultRoster.stream().allMatch(t -> t.getName().equals("Default")));
 	}
 	
 	@Test
 	public void testIterate(){
-		//I primi 5 numeri dispari
 		List<Integer> firstEven = Stream.iterate(1, n -> n+2).limit(5).collect(Collectors.toList());
 		assertTrue(firstEven.stream().allMatch(n -> n%2 == 1));
 		assertEquals(firstEven.toString(),"[1, 3, 5, 7, 9]");
@@ -214,8 +193,8 @@ public class StreamTest {
 										new Person("Two", IsoChronology.INSTANCE.date(1980, 1, 1),
 													Person.Sex.MALE, "two@example.com"),
 										new Person("Three", IsoChronology.INSTANCE.date(1980, 1, 1),
-												Person.Sex.MALE, "three@example.com")).skip(2);
-		assertEquals(sPers.count(),1);
+												Person.Sex.MALE, "three@example.com"));
+		assertEquals(sPers.skip(2).count(),1);
 		
 	}
 	
@@ -244,3 +223,4 @@ public class StreamTest {
 	}
 
 }
+ 
