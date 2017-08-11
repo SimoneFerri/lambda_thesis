@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class PersonTestLambda {
 	 
@@ -71,6 +74,14 @@ public class PersonTestLambda {
                     forEach(System.out::println); 
 
         
+        //IntStream
+        IntStream firstFive = IntStream.range(0,6);
+        System.out.println(firstFive.summaryStatistics());
+
+        //DoubleStream
+        DoubleStream dS = DoubleStream.of(2.0,4.0,8.0);
+        Stream<Double> dStream = dS.boxed();
+        dStream.forEach(System.out::println);
     }
 }
 

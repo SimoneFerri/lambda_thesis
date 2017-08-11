@@ -15,9 +15,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -159,7 +156,7 @@ public class StreamTest {
 		assertTrue(firstEven.stream().allMatch(n -> n%2 == 1));
 		assertEquals(firstEven.toString(),"[1, 3, 5, 7, 9]");
 	}
-	
+
 	@Test
 	public void testMinMax(){
 		
