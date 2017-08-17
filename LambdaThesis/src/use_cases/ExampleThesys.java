@@ -3,12 +3,13 @@ package use_cases;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class PersonTestLambda {
+public class ExampleThesys {
 	 
     public static void printPersonsWithPredicate(List<Person> roster, Predicate<Person> tester) {
         for (Person p : roster) {
@@ -82,6 +83,15 @@ public class PersonTestLambda {
         DoubleStream dS = DoubleStream.of(2.0,4.0,8.0);
         Stream<Double> dStream = dS.boxed();
         dStream.forEach(System.out::println);
+    
+        //OPTIONAL
+        Optional<String> dog = Optional.of("Dog");
+        Optional<String> dog2 = null;
+        Optional<String> dog3 = Optional.empty();
+        System.out.println(dog.orElse("Not a Dog"));
+        System.out.println(Optional.ofNullable(dog2));
+        System.out.println(dog3.orElse("Not a Dog"));
+    
     }
 }
 
