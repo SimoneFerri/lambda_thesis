@@ -59,7 +59,6 @@ public class ParallelStreamTest {
 	}
 	
 	
-	//TO WATCH: Concurrent.Collections(ConcurrentMap) and Collectors(groupingByConcurrent)
 	@Test
 	public void testConcurrentReduction(){
 		Map<Person.Sex, List<Person>> byGender =
@@ -97,10 +96,11 @@ public class ParallelStreamTest {
 	public void testOrderingSideEffect(){
 				
 		// IT'S RANDOM
-		//integers.parallelStream().forEach(e -> System.out.print(e + " "));
+		//integers.parallelStream().forEach(e -> System.out.print(e*2 + " "));
+		
+		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(baos));
-		
 		//forEachordered haven't side effect
 		integers.parallelStream().forEachOrdered(e -> System.out.print(e + " "));
 		assertEquals(baos.toString(),numbers);
@@ -138,7 +138,7 @@ public class ParallelStreamTest {
 	@Test
 	public void testStateful(){
 		
-		//serial stream5
+		//serial stream
 		List<Integer> serialStorage = new ArrayList<>();
 	     
 		integers
@@ -158,14 +158,14 @@ public class ParallelStreamTest {
 		    .forEachOrdered(e -> e.intValue());
 
 		assertFalse(integers.equals(parallelStorage));
-	
+
 		//Parallel stream without synchronized
+		
 		List<Integer> parallelNoSynch = new ArrayList<>();
 		integers
 				.parallelStream()
 				.map(e -> { parallelStorage.add(e); return e;})
 				.forEachOrdered(e -> e.intValue());
-		
 		//could have null value or not have all the values
 		assertFalse(integers.equals(parallelNoSynch));
 		

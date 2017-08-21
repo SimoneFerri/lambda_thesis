@@ -2,6 +2,8 @@ package use_cases;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -84,7 +86,7 @@ public class ExampleThesys {
         Stream<Double> dStream = dS.boxed();
         dStream.forEach(System.out::println);
     
-        //OPTIONAL
+        //Optional
         Optional<String> dog = Optional.of("Dog");
         Optional<String> dog2 = null;
         Optional<String> dog3 = Optional.empty();
@@ -92,6 +94,18 @@ public class ExampleThesys {
         System.out.println(Optional.ofNullable(dog2));
         System.out.println(dog3.orElse("Not a Dog"));
     
+        //ParallelStream
+   
+        List<Integer> integers = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+        //Side effect
+        integers.parallelStream().forEach(e -> System.out.print(e*2 + " "));
+        System.out.println(" ");
+        //Correct
+        integers.parallelStream().forEachOrdered(e -> System.out.print(e*2 + " "));
+
+
+
+
     }
 }
 
