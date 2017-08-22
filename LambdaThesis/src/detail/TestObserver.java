@@ -11,8 +11,9 @@ public class TestObserver {
 				
 		f.addListener(() -> System.out.println("Mum 1"));
 		f.setAlarm(true);
-		f.removeListener(0);
 		f.setAlarm(false);
+		f.removeListener(0);
+		f.setAlarm(true);
 	}
 	
 }

@@ -22,8 +22,7 @@ public class Home {
 	}
 	
 	public void notifyObservers(){
-		for(RemoteControl o : list)
-			o.alert();
+		list.forEach(o -> o.alert());
 	}
 	
 	public boolean isAlarm() {
