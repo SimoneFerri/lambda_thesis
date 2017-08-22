@@ -1,9 +1,14 @@
 package exception;
 
+import java.io.IOException;
 import java.util.function.Consumer;
 
 public class LambdaException {
 	
+	@FunctionalInterface
+	public interface ThrowingConsumerIOE<T> {
+		void accept(T t) throws IOException;
+	}
 	
 	@FunctionalInterface
 	public interface ThrowingConsumer<T, E extends Exception> {
@@ -48,6 +53,19 @@ public class LambdaException {
 			    }
 			};
 	}
+	
+	public static <T> Consumer<T> handlingConsumerWrapperIOE(
+			
+			ThrowingConsumerIOE<T> throwingConsumer) {
+
+				return i -> {
+					try {
+						throwingConsumer.accept(i);
+				    } catch (IOException ex) {
+				            System.err.println("Exception occured : IOException ");
+				    }
+				};
+		}	
 	
 	
 	 

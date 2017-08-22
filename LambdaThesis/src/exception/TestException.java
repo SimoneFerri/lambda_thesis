@@ -24,8 +24,7 @@ import javaslang.control.Try;
 public class TestException {
 
 	List<Integer> numbers = Arrays.asList(3, 9, 7, 0, 10, 20);
-
-	
+		
 	@Test
 	public void testException() {
 		
@@ -46,10 +45,30 @@ public class TestException {
 		assertEquals("IOException",s);
 
 		System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-
-			
+		
 	}
 	
+	@Test 
+	public void testIOE(){
+		
+		ByteArrayOutputStream hideOut = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(hideOut));
+		
+		ByteArrayOutputStream hideErr = new ByteArrayOutputStream();
+		System.setErr(new PrintStream(hideErr));
+
+		
+		numbers.forEach(LambdaException.handlingConsumerWrapperIOE(
+											i -> readFromFile(i)));
+		
+		
+		assertEquals("Exception occured : IOException ",
+					 hideErr.toString().replaceAll("\\s+"," "));
+
+		System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+		System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
+
+	}
 	
 	@Test  
 	public void testUncheckedExc() {
@@ -70,19 +89,6 @@ public class TestException {
 		System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
 		System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
 
-		
-		/*	
-		Timeit.code(() ->
-		System.out.println(
-				integers.stream().
-				mapToInt(e -> e).
-				sum()));
-		
-		
-		Timeit.code(() ->
-				System.out.println("Parallel = " + integers.parallelStream().mapToInt(a -> a).sum())
-				);
-	*/	
 	}
 	
 	@Test 
@@ -169,7 +175,7 @@ public class TestException {
 			try {
 				readFromFile(i);
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				throw new UncheckedIOException(e1);
 			}
 		});
 		
