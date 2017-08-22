@@ -17,12 +17,16 @@ public class Home {
 		list.add(o);
 	}
 	
-	public void notifyObservers(){
-		for(RemoteControl o : list)
-			o.update();
+	public void removeListener(int pos){
+		list.remove(pos);
 	}
 	
-	public boolean isWinner() {
+	public void notifyObservers(){
+		for(RemoteControl o : list)
+			o.alert();
+	}
+	
+	public boolean isAlarm() {
 		return alarm;
 	}
 
@@ -33,7 +37,4 @@ public class Home {
 			notifyObservers();
 		}
 	}
-
-	
-	
 }

@@ -3,7 +3,7 @@ package detail;
 @FunctionalInterface
 public interface RemoteControl{
 	
-	public void update();
+	public void alert();
 
 }
  
