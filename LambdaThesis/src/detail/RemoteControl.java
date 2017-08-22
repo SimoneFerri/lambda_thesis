@@ -1,7 +1,9 @@
 package detail;
 
 @FunctionalInterface
-public interface MyObserver {
-
+public interface RemoteControl{
+	
 	public void update();
+
 }
+ 

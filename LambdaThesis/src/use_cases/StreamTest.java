@@ -125,7 +125,7 @@ public class StreamTest {
 	    assertEquals(together,roster);
 	    
 	    //FLATMAPINT SUM OF AGE'S
-	    assertEquals(104,roster2.stream().flatMapToInt(n -> IntStream.of(n.getAge())).sum());
+	    assertEquals(105,roster2.stream().flatMapToInt(n -> IntStream.of(n.getAge())).sum());
 	}
 	
 	@Test

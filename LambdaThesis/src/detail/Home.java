@@ -1,0 +1,39 @@
+package detail;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Home {
+
+	private boolean alarm;
+	private List<RemoteControl> list = new ArrayList<RemoteControl>();
+	
+	public Home(boolean w){
+		alarm = w;
+		System.out.println("Init alarm is : " + w);
+	}
+	
+	public void addListener(RemoteControl o){
+		list.add(o);
+	}
+	
+	public void notifyObservers(){
+		for(RemoteControl o : list)
+			o.update();
+	}
+	
+	public boolean isWinner() {
+		return alarm;
+	}
+
+	public void setAlarm(boolean a) {
+		if(this.alarm != a){	
+			this.alarm = a;
+			System.out.println("CHANGED new state: " + alarm + "\nMy observer are : ");
+			notifyObservers();
+		}
+	}
+
+	
+	
+}

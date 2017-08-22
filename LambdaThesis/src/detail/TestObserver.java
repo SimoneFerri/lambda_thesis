@@ -4,14 +4,14 @@ public class TestObserver {
 
 	public static void main(String[] args) {
 		
-		Subject f = new Subject("one",true);
+		Home f = new Home(false);
 		f.addListener(() -> System.out.println("First Observer"));
-		f.setName("two");
-		f.setName("three");
-		
+		f.setAlarm(false);
+		f.setAlarm(true);
+				
 		f.addListener(() -> System.out.println("Second Observer"));
-		f.setName("four");
-		f.setState(false);
+		f.setAlarm(true);
+		f.setAlarm(false);
 	}
 	
 }
