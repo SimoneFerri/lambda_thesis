@@ -208,7 +208,6 @@ public class StreamTest {
         .peek(e -> System.out.println("Mapped value: " + e + ";"))
         .findAny()
         .get());
- //       .forEach(System.out::println);
 	
 		String s = "Filtered value: Fred 37 ; Mapped value: 37; 37 ";
 

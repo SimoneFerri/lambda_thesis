@@ -57,7 +57,6 @@ public class LambdaException {
 	public static <T> Consumer<T> handlingConsumerWrapperIOE(
 			
 			ThrowingConsumerIOE<T> throwingConsumer) {
-
 				return i -> {
 					try {
 						throwingConsumer.accept(i);
